@@ -5,6 +5,8 @@ import './App.css';
 
 import io from 'socket.io-client'
 
+import { JoinChat } from './modules/join-chat'
+
 let endPoint = 'http://localhost:5000'
 let socket = io.connect(`${endPoint}`)
 
@@ -50,19 +52,27 @@ const App = () => {
     }
   }
 
+  let flag = true
+
   return (
-    <div>
-      {messages.length > 0 &&
-        messages.map(msg => (
+    <>
+    {
+      (flag)
+        ?<JoinChat/>
+        :
           <div>
-            <p>{msg}</p>
-          </div>
-        ))}
-        <input value={room} name="room" onChange={e => setRoom(e.target.value)}/>
-        <button onClick={() => onClickRoom()}>Connect to room</button>
-        <input value={message} name="message" onChange={e => onChange(e)} />
-        <button onClick={() => onClick()}>Send Message</button>
-    </div>
+          {messages.length > 0 &&
+            messages.map(msg => (
+              <div>
+                <p>{msg}</p>
+              </div>
+            ))}
+            <input value={room} name="room" onChange={e => setRoom(e.target.value)}/>
+            <button onClick={() => onClickRoom()}>Connect to room</button>
+            <input value={message} name="message" onChange={e => onChange(e)} />
+            <button onClick={() => onClick()}>Send Message</button>
+        </div>}
+      </>
   )
 }
 
